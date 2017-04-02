@@ -1,7 +1,7 @@
 AUTOMAKE_OPTIONS = foreign
 SUBDIRS = src
 DIST_SUBDIRS = src
-CLEANFILES = agl/navigation.wgt flite jtalk
+CLEANFILES = package/navigation.wgt flite jtalk
 
 bin_SCRIPTS = flite jtalk navigation.wgt
 flite: flite.in
@@ -13,8 +13,9 @@ jtalk: jtalk.in
 	chmod +x jtalk
 
 navigation.wgt:src/navi
-	rm -f agl/navigation.wgt
-	mkdir -p agl
-	cp src/.libs/navi agl/
-	cp $(srcdir)/agl/config.xml agl/
-	wgtpkg-pack -f -o navigation.wgt agl/
+	rm -rf package/
+	mkdir -p package/root
+	cp src/.libs/navi package/root/
+	cp $(srcdir)/agl/config.xml package/root/
+	cp $(srcdir)/agl/HMI_AppLauncher_Navigation_Active-01.png package/root/navigation.png
+	wgtpkg-pack -f -o package/navigation.wgt package/root
